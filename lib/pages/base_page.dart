@@ -3,9 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:nested_bottom_navigation_bar/enums/tab_item.dart';
 
 /// 各ページの Navigator の状態
-/// NavigatorState は State クラスを継承している
-/// 仮に build メソッド内で定義した場合、リビルドの度に新しい State が生成されるため
-/// Navigator 内の状態（詳細ページに遷移しているかどうか）が保持されない
 final navigatorKeys = <TabItem, GlobalKey<NavigatorState>>{
   TabItem.home: GlobalKey<NavigatorState>(),
   TabItem.timeline: GlobalKey<NavigatorState>(),
