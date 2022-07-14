@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nested_bottom_navigation_bar/pages/base_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,28 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(),
-      home: const MainPage(),
-    );
-  }
-}
-
-class MainPage extends StatelessWidget {
-  const MainPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            const Text('BottomNav'),
-            Container(
-              color: Colors.black,
-              child: const Text('aa'),
-            ),
-          ],
-        ),
-      ),
+      home: const BasePage(),
     );
   }
 }
