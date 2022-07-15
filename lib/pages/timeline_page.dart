@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nested_bottom_navigation_bar/enums/tab_item.dart';
 import 'package:nested_bottom_navigation_bar/pages/detail_page.dart';
 
 class TimelinePage extends StatelessWidget {
@@ -6,13 +7,15 @@ class TimelinePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pageTitle = TabItem.timeline.title;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Timeline')),
+      appBar: AppBar(title: Text(pageTitle)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Timeline'),
+            Text(pageTitle),
             ElevatedButton(
               onPressed: () {
                 Navigator.push<void>(
