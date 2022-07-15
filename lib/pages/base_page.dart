@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:nested_bottom_navigation_bar/enums/tab_item.dart';
 
-final navigatorKeys = <TabItem, GlobalKey<NavigatorState>>{
+final _navigatorKeys = <TabItem, GlobalKey<NavigatorState>>{
   TabItem.home: GlobalKey<NavigatorState>(),
   TabItem.timeline: GlobalKey<NavigatorState>(),
   TabItem.settings: GlobalKey<NavigatorState>(),
@@ -21,7 +21,7 @@ class BasePage extends HookWidget {
               (tabItem) => Offstage(
                 offstage: currentTab.value != tabItem,
                 child: Navigator(
-                  key: navigatorKeys[tabItem],
+                  key: _navigatorKeys[tabItem],
                   onGenerateRoute: (settings) {
                     return MaterialPageRoute<Widget>(
                       builder: (context) => tabItem.page,
@@ -46,7 +46,7 @@ class BasePage extends HookWidget {
         onTap: (index) {
           final selectedTab = TabItem.values[index];
           if (currentTab.value == selectedTab) {
-            navigatorKeys[selectedTab]
+            _navigatorKeys[selectedTab]
                 ?.currentState
                 ?.popUntil((route) => route.isFirst);
           } else {
