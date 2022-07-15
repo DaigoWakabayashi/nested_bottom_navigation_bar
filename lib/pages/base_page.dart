@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:nested_bottom_navigation_bar/enums/tab_item.dart';
 
-/// 各ページの Navigator の状態
 final navigatorKeys = <TabItem, GlobalKey<NavigatorState>>{
   TabItem.home: GlobalKey<NavigatorState>(),
   TabItem.timeline: GlobalKey<NavigatorState>(),

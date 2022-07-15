@@ -7,6 +7,7 @@ class TimelinePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('Timeline')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
