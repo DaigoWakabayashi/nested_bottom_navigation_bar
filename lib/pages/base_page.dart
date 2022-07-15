@@ -15,22 +15,37 @@ class BasePage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final currentTab = useState(TabItem.home);
-
     return Scaffold(
       body: Stack(
         children: TabItem.values
             .map(
-              (tabItem) => _TabPage(
-                currentTab: currentTab.value,
-                tabItem: tabItem,
-                navigationKey: navigatorKeys[tabItem]!,
+              (tabItem) => Offstage(
+                offstage: currentTab.value != tabItem,
+                child: Navigator(
+                  key: navigatorKeys[tabItem],
+                  onGenerateRoute: (settings) {
+                    return MaterialPageRoute<Widget>(
+                      builder: (context) => tabItem.page,
+                    );
+                  },
+                ),
               ),
             )
             .toList(),
       ),
-      bottomNavigationBar: _BottomNavigationBar(
-        currentTab: currentTab.value,
-        onSelect: (selectedTab) {
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: TabItem.values.indexOf(currentTab.value),
+        items: TabItem.values
+            .map(
+              (tabItem) => BottomNavigationBarItem(
+                icon: Icon(tabItem.icon),
+                label: tabItem.title,
+              ),
+            )
+            .toList(),
+        onTap: (index) {
+          final selectedTab = TabItem.values[index];
           if (currentTab.value == selectedTab) {
             navigatorKeys[selectedTab]
                 ?.currentState
@@ -41,62 +56,6 @@ class BasePage extends HookWidget {
           }
         },
       ),
-    );
-  }
-}
-
-class _TabPage extends StatelessWidget {
-  const _TabPage({
-    required this.currentTab,
-    required this.tabItem,
-    required this.navigationKey,
-  });
-
-  final TabItem currentTab;
-  final TabItem tabItem;
-  final GlobalKey<NavigatorState> navigationKey;
-
-  @override
-  Widget build(BuildContext context) {
-    return Offstage(
-      offstage: currentTab != tabItem,
-      child: Navigator(
-        key: navigationKey,
-        onGenerateRoute: (settings) {
-          return MaterialPageRoute<Widget>(
-            builder: (context) => tabItem.page,
-          );
-        },
-      ),
-    );
-  }
-}
-
-class _BottomNavigationBar extends StatelessWidget {
-  const _BottomNavigationBar({
-    required this.currentTab,
-    required this.onSelect,
-  });
-
-  final TabItem currentTab;
-  final ValueChanged<TabItem> onSelect;
-
-  @override
-  Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      currentIndex: TabItem.values.indexOf(currentTab),
-      items: TabItem.values
-          .map(
-            (tabItem) => BottomNavigationBarItem(
-              icon: Icon(tabItem.icon),
-              label: tabItem.title,
-            ),
-          )
-          .toList(),
-      onTap: (index) {
-        onSelect(TabItem.values[index]);
-      },
     );
   }
 }
